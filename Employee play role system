@@ -1,0 +1,78 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Employee {
+private:
+    string name;
+    int id;
+    double salary;
+
+public:
+    // Default constructor
+    Employee() : name(""), id(0), salary(0.0) {}
+
+    // Parameterized constructor
+    Employee(string empName, int empID, double empSalary) 
+        : name(empName), id(empID), salary(empSalary) {}
+
+    // Copy constructor
+    Employee(const Employee &emp) {
+        name = emp.name;
+        id = emp.id;
+        salary = emp.salary;
+    }
+
+    // Function to display employee details
+    void display() const {
+        cout << "Employee ID: " << id << "\n";
+        cout << "Name: " << name << "\n";
+        cout << "Salary: $" << salary << "\n";
+        cout << "-----------------------------\n";
+    }
+};
+
+int main() {
+    int numEmployees;
+    cout << "Enter the number of employees: ";
+    cin >> numEmployees;
+
+    // Create an array of Employee objects
+    Employee* employees = new Employee[numEmployees];
+
+    // Input employee details
+    for (int i = 0; i < numEmployees; i++) {
+        string name;
+        int id;
+        double salary;
+
+        cout << "Enter details for Employee " << i + 1 << ":\n";
+        cout << "Name: ";
+        cin.ignore(); // Ignore newline from previous input
+        getline(cin, name);
+        cout << "ID: ";
+        cin >> id;
+        cout << "Salary: ";
+        cin >> salary;
+
+        employees[i] = Employee(name, id, salary); // Using parameterized constructor
+    }
+
+    // Creating a copy of the first employee (Example usage of copy constructor)
+    Employee duplicateEmployee = employees[0]; 
+
+    // Display all employees
+    cout << "\nPayroll Details:\n";
+    for (int i = 0; i < numEmployees; i++) {
+        employees[i].display();
+    }
+
+    // Display duplicate employee details
+    cout << "Duplicate Employee Details (Copied from first employee):\n";
+    duplicateEmployee.display();
+
+    // Free allocated memory
+    delete[] employees;
+
+    return 0;
+}
